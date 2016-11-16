@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT vs T.CSharp", "CT vs T.CSharp.csproj", "{86D19AEB-C296-441C-1CA1-4495E53BBE23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
