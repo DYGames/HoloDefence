@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT vs T.CSharp.Plugins", "CT vs T.CSharp.Plugins.csproj", "{5F699F64-5FAB-5192-7022-F4E4A3C0E990}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT vs T.CSharp", "CT vs T.CSharp.csproj", "{86D19AEB-C296-441C-1CA1-4495E53BBE23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT vs T.CSharp.Editor", "CT vs T.CSharp.Editor.csproj", "{859724C0-BCD0-152B-7A85-0880CC8C8F07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F699F64-5FAB-5192-7022-F4E4A3C0E990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F699F64-5FAB-5192-7022-F4E4A3C0E990}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F699F64-5FAB-5192-7022-F4E4A3C0E990}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F699F64-5FAB-5192-7022-F4E4A3C0E990}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D19AEB-C296-441C-1CA1-4495E53BBE23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{859724C0-BCD0-152B-7A85-0880CC8C8F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859724C0-BCD0-152B-7A85-0880CC8C8F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859724C0-BCD0-152B-7A85-0880CC8C8F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859724C0-BCD0-152B-7A85-0880CC8C8F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//홀로렌즈에서 총주울시 포지션 또 이상함
-
 public class GunMng : MonoBehaviour
 {
     [HideInInspector]
@@ -50,11 +48,18 @@ public class GunMng : MonoBehaviour
                 ShootGun();
             }
         }
+#if UNITY_EDITOR
         if (Input.GetKey(KeyCode.G))
         {
             if (!isGunDrop)
                 DropGun();
         }
+        if (Input.GetKey(KeyCode.T))
+        {
+            CloseTurretBuyMenu();
+            FindObjectOfType<Gaze>().setTurretMode();
+        }
+#endif
     }
 
     public void SetFocus(bool focus, Monster monster)
@@ -86,7 +91,7 @@ public class GunMng : MonoBehaviour
         OpenTurretBuyMenu();
     }
 
-    void OpenTurretBuyMenu()
+    public void OpenTurretBuyMenu()
     {
         TurretMenu.Play("Open");
     }

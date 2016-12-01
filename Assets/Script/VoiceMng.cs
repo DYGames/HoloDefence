@@ -31,7 +31,6 @@ public class VoiceMng : MonoBehaviour
         // {
         //
         // });
-
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
         keywordRecognizer.Start();

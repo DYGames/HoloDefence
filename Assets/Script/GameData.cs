@@ -13,7 +13,7 @@ public class GameData
             }
             return Instance;
         }
-        set
+        private set
         {
             Instance = value;
         }
