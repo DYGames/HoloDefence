@@ -15,6 +15,8 @@ public class Gaze : MonoBehaviour
     public GameObject Turret;
     public GameObject TurretPrefab;
 
+    MeshRenderer Range;
+
     public GameObject FocusedObject { get; private set; }
     GestureRecognizer recognizer;
 
@@ -26,9 +28,12 @@ public class Gaze : MonoBehaviour
         recognizer.TappedEvent += (source, tapCount, ray) =>
         {
             OnSelect();
-            FocusedObject.SendMessageUpwards("OnSelect");
+            if (FocusedObject != null)
+                FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
         };
         recognizer.StartCapturingGestures();
+        mode = "CrossHair";
+        Range = transform.Find("Gaze").Find("Range").GetComponent<MeshRenderer>();
     }
 
     void Update()
@@ -44,6 +49,8 @@ public class Gaze : MonoBehaviour
             transform.position = hitinfo.point;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, hitinfo.normal);
             meshRenderer.enabled = true;
+            if (mode == "Turret")
+                Range.enabled = true;
             FocusedObject = hitinfo.collider.gameObject;
 
             OnFocus(hitinfo, hitinfo.collider.gameObject.tag);
@@ -51,26 +58,16 @@ public class Gaze : MonoBehaviour
         else
         {
             meshRenderer.enabled = false;
+            Range.enabled = false;
             FocusedObject = null;
-
-            OffFocus();
         }
 
         if (FocusedObject != oldFocusObject)
         {
+            OffFocus();
             recognizer.CancelGestures();
             recognizer.StartCapturingGestures();
         }
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnSelect();
-            if (FocusedObject != null)
-            {
-                FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
-            }
-        }
-#endif
     }
 
     public void OnFocus(RaycastHit hitinfo, string tag)
@@ -99,6 +96,8 @@ public class Gaze : MonoBehaviour
         meshRenderer.enabled = false;
         meshRenderer = Turret.GetComponent<MeshRenderer>();
         mode = "Turret";
+        Range.enabled = true;
+        Range.transform.localScale = new Vector3(20, 20, 20);
     }
 
     public void setCrossHairMode()
@@ -118,9 +117,11 @@ public class Gaze : MonoBehaviour
             GameObject o = Instantiate(TurretPrefab);
             o.transform.position = transform.FindChild("Gaze").position;
             o.transform.rotation = transform.FindChild("Gaze").rotation;
-            o.transform.parent = FocusedObject.transform;
+            //o.transform.parent = FocusedObject.transform;
+            o.GetComponent<Turret>().InitTurret(10, 2, 1);
             Gun.OpenTurretBuyMenu();
             setCrossHairMode();
+            Range.enabled = false;
         }
     }
 }

@@ -93,12 +93,15 @@
     <Compile Include="Assets\SampleScenes\Scripts\ParticleSceneControls.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\PlaceTargetWithMouse.cs" />
     <Compile Include="Assets\SampleScenes\Scripts\SlowMoButton.cs" />
+    <Compile Include="Assets\Script\CreateSpawner.cs" />
     <Compile Include="Assets\Script\GameData.cs" />
     <Compile Include="Assets\Script\Gaze.cs" />
     <Compile Include="Assets\Script\Gesture.cs" />
     <Compile Include="Assets\Script\GunMng.cs" />
+    <Compile Include="Assets\Script\InsteadVoice.cs" />
     <Compile Include="Assets\Script\Monster.cs" />
     <Compile Include="Assets\Script\MuzzleFlash.cs" />
+    <Compile Include="Assets\Script\Turret.cs" />
     <Compile Include="Assets\Script\VoiceMng.cs" />
   </ItemGroup>
   <ItemGroup>

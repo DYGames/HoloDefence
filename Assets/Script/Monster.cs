@@ -16,18 +16,19 @@ public class Monster : MonoBehaviour
         attackpower = 1;
         rigidBody = GetComponent<Rigidbody>();
     }
-    
-    public void Hit(float dmg)
+
+    public void Hit(float dmg, Transform hitter)
     {
+        hitter.LookAt(transform);
+
         HP -= dmg;
-        rigidBody.AddForce(Camera.main.transform.forward * 50);
+        rigidBody.AddForce(hitter.forward * 50);
         if (HP <= 0)
         {
             gameObject.layer = 2;
             rigidBody.constraints = RigidbodyConstraints.None;
             Invoke("DestroyMonster", 2);
         }
-
     }
 
     void DestroyMonster()

@@ -12,19 +12,17 @@ public class VoiceMng : MonoBehaviour
 
     void Start()
     {
+        if (Application.platform == RuntimePlatform.WindowsEditor)
+            return;
+
         keywords.Add("Tower", () =>
         {
-            if (FindObjectOfType<GunMng>().isGunDrop)
-            {
-                FindObjectOfType<GunMng>().CloseTurretBuyMenu();
-                FindObjectOfType<Gaze>().setTurretMode();
-            }
+            SayTower();
         });
 
         keywords.Add("Drop", () =>
         {
-            if (!FindObjectOfType<GunMng>().isGunDrop)
-                FindObjectOfType<GunMng>().DropGun();
+            SayDrop();
         });
 
         // keywords.Add("", () =>
@@ -43,5 +41,20 @@ public class VoiceMng : MonoBehaviour
         {
             keywordAction.Invoke();
         }
+    }
+
+    public void SayTower()
+    {
+        if (FindObjectOfType<GunMng>().isGunDrop)
+        {
+            FindObjectOfType<GunMng>().CloseTurretBuyMenu();
+            FindObjectOfType<Gaze>().setTurretMode();
+        }
+    }
+
+    public void SayDrop()
+    {
+        if (!FindObjectOfType<GunMng>().isGunDrop)
+            FindObjectOfType<GunMng>().DropGun();
     }
 }

@@ -5,10 +5,21 @@
 # Write a line equal to 'overwrite-all' (without quotes) to overwrite everything (preserved accross builds)
 # Write a line equal to 'keep-all' (without quotes) to keep files regardless their modification (preserved accross builds)
 # Default behavior is to never overwrite files
-CT vs T.sln: modified
+2013_10 - Sample Assets.sln: F01C78332B46A1A50D0F1B9CA4C7FEC4
+2013_10 - Sample Assets\2013_10 - Sample Assets.csproj: F77FB2F98150D427994CCC0851D30FC5
+2013_10 - Sample Assets\2013_10 - Sample Assets.csproj.user: BEFB8AC4886C4CFDD3C68445D6F19B04
+2013_10 - Sample Assets\App.cs: 53438938800171380FFE25FC03B754AF
+2013_10 - Sample Assets\Package.appxmanifest: DAA16F6DE40CB425B33F74486FA77E44
+2013_10 - Sample Assets\project.json: 1D02BC64BAC0D041019673A1C4C51737
+2013_10 - Sample Assets\Assets\SplashScreen.scale-200.png: 60618416282ED104FD1473935716045D
+2013_10 - Sample Assets\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
+2013_10 - Sample Assets\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775DE
+2013_10 - Sample Assets\Assets\Square44x44Logo.targetsize-24_altform-unplated.png: 156637F7B5363E983E7A46D8E533A23D
+2013_10 - Sample Assets\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
+2013_10 - Sample Assets\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
+2013_10 - Sample Assets\Properties\AssemblyInfo.cs: 6F1C3C2BD79D0DD8608BCB3ECE71825F
+2013_10 - Sample Assets\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826
 CT vs T\App.cs: 5FCDE62DADEDE328AE42799D080895D6
-CT vs T\CT vs T.csproj: 470952CCBE14DF5F5BFAF4A376D35C69
-CT vs T\CT vs T.csproj.user: modified
 CT vs T\Package.appxmanifest: modified
 CT vs T\project.json: 1D02BC64BAC0D041019673A1C4C51737
 CT vs T\Assets\SplashScreen.scale-200.png: 60618416282ED104FD1473935716045D
@@ -19,3 +30,5 @@ CT vs T\Assets\StoreLogo.png: 90BD194CA4A7CFFF3E8B8222229857FB
 CT vs T\Assets\Wide310x150Logo.scale-200.png: C96846A80DF667F87355569CD816192D
 CT vs T\Properties\AssemblyInfo.cs: 12035872127B5DDDC48DED681567FC9C
 CT vs T\Properties\Default.rd.xml: 72EB282657164E79A1C42F6240984826
+GeneratedProjects\UWP\Assembly-CSharp\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
+GeneratedProjects\UWP\Assembly-CSharp-firstpass\project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1

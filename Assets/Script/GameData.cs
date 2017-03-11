@@ -7,7 +7,7 @@ public class GameData
     {
         get
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = new GameData();
             }
@@ -21,7 +21,7 @@ public class GameData
 
     GameData()
     {
-        
+
     }
 
 }
