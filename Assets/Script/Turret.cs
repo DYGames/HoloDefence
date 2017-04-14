@@ -4,41 +4,42 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    public float Range;
-    public float AttackSpeed;
-    public int AttackDmg;
+    public float _range;
+    public float _attackSpeed;
+    public int _attackDmg;
 
     public void InitTurret(float range, float attackspeed, int attackdmg)
     {
-        Range = range;
-        AttackSpeed = attackspeed;
-        AttackDmg = attackdmg;
+        _range = range;
+        _attackSpeed = attackspeed;
+        _attackDmg = attackdmg;
     }
 
     void Start()
     {
-        StartCoroutine(FindEnemy());
+        StartCoroutine(FindHitableUnit());
     }
 
-    IEnumerator FindEnemy()
+    IEnumerator FindHitableUnit()
     {
-        yield return new WaitForSeconds(AttackSpeed);
-        Collider[] enemys = Physics.OverlapSphere(transform.position, Range);
+        yield return new WaitForSeconds(_attackSpeed);
+        Collider[] units = Physics.OverlapSphere(transform.position, _range);
 
-        for (int i = 0; i < enemys.Length; i++)
+        for (int i = 0; i < units.Length; i++)
         {
-            if (enemys[i].tag == "Monster")
+            if (units[i].tag == "Monster")
             {
-                Shoot(enemys[i].GetComponent<Monster>());
+                Shoot(units[i].GetComponent<Unit>());
+                break;
             }
         }
-        StartCoroutine(FindEnemy());
+        StartCoroutine(FindHitableUnit());
     }
 
-    void Shoot(Monster monster)
+    void Shoot(Unit unit)
     {
         ShootEffect();
-        monster.Hit(AttackDmg, transform);
+        unit.Hit(_attackDmg, transform);
     }
 
     void ShootEffect()

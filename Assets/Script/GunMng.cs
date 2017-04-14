@@ -4,120 +4,120 @@ using System.Collections;
 public class GunMng : MonoBehaviour
 {
     [HideInInspector]
-    public bool isFocusOnMonster;
-    Monster targetMonster;
+    public bool _isFocusOnUnit;
+    public bool _isGunDrop;
+    public bool _shootAble;
 
-    Vector3 gunposition;
-    Quaternion gunrotation;
+    float _followSpeed;
+    float _shootDmg;
 
-    float shootdmg;
+    Vector3 _gunPosition;
+    Quaternion _gunRotation;
 
-    public Animation muzzleflash;
-    public Animation TurretMenu;
-    Animator gunAnimation;
-    BoxCollider gunCollider;
-    Rigidbody rigidBody;
+    Unit _targetUnit;
 
-    MeshRenderer muzzleflashmesh;
-
-    public bool isGunDrop;
-
-    public bool ShootAble;
-
-    float followSpeed;
+    public Animation _muzzleFlash;
+    public Animation _turretMenu;
+    Animator _gunAnimation;
+    BoxCollider _gunCollider;
+    Rigidbody _rigidBody;
 
     void Start()
     {
-        followSpeed = 17;
-        gunposition = transform.position;
-        gunrotation = transform.rotation;
-        isGunDrop = false;
-        isFocusOnMonster = false;
-        targetMonster = null;
-        shootdmg = 1;
-        ShootAble = true;
-        muzzleflashmesh = muzzleflash.GetComponent<MeshRenderer>();
-        rigidBody = GetComponent<Rigidbody>();
-        gunCollider = GetComponent<BoxCollider>();
-        gunAnimation = GetComponent<Animator>();
+        _followSpeed = 17;
+        _gunPosition = transform.position;
+        _gunRotation = transform.rotation;
+        _isGunDrop = false;
+        _isFocusOnUnit = false;
+        _targetUnit = null;
+        _shootDmg = 5;
+        _shootAble = true;
+        _rigidBody = GetComponent<Rigidbody>();
+        _gunCollider = GetComponent<BoxCollider>();
+        _gunAnimation = GetComponent<Animator>();
     }
 
     void Update()
     {
-        transform.parent.parent.rotation = Quaternion.Lerp(transform.parent.parent.rotation, Camera.main.transform.rotation, followSpeed * Time.deltaTime);
+        if (!_isGunDrop)
+            transform.parent.parent.rotation = Quaternion.Lerp(transform.parent.parent.rotation, Camera.main.transform.rotation, _followSpeed * Time.deltaTime);
 
-        if (ShootAble && isFocusOnMonster && !isGunDrop)
+        if (_shootAble && _isFocusOnUnit && !_isGunDrop)
             ShootGun();
     }
 
     void LateUpdate()
     {
-        transform.parent.parent.position = Camera.main.transform.position;
+        if (!_isGunDrop)
+            transform.parent.parent.position = Camera.main.transform.position;
     }
 
     public void setShootAbleTrue()
     {
-        ShootAble = true;
+        _shootAble = true;
     }
 
     public void MuzzleFlash()
     {
-        muzzleflash.Play("MuzzleFlash");
+        _muzzleFlash.Play("MuzzleFlash");
     }
 
-    public void SetFocus(bool focus, Monster monster)
+    public void SetFocus(bool focus, Unit unit)
     {
-        isFocusOnMonster = focus;
-        targetMonster = monster;
+        _isFocusOnUnit = focus;
+        _targetUnit = unit;
     }
 
     void ShootGun()
     {
-        ShootAble = false;
-        gunAnimation.SetTrigger("Shoot");
-        targetMonster.Hit(shootdmg, Camera.main.transform);
+        if (_targetUnit.HP <= 0)
+            return;
+        _shootAble = false;
+        _gunAnimation.SetTrigger("Shoot");
+        Invoke("setShootAbleTrue", 1);
+        _targetUnit.GetComponent<Unit>().Hit(_shootDmg, Camera.main.transform);
     }
 
     public void DropGun()
     {
-        if (isGunDrop)
+        if (_isGunDrop)
             return;
-        isGunDrop = true;
+        _isGunDrop = true;
         gameObject.layer = 0;
         transform.parent = null;
-        rigidBody.constraints = RigidbodyConstraints.None;
-        rigidBody.AddForce((Camera.main.transform.forward + Camera.main.transform.up) * 75);
+        _rigidBody.constraints = RigidbodyConstraints.None;
+        _rigidBody.AddForce((Camera.main.transform.forward + Camera.main.transform.up) * 75);
         OpenTurretBuyMenu();
-        gunCollider.enabled = true;
+        _gunCollider.enabled = true;
     }
     public void PickGun()
     {
         CloseTurretBuyMenu();
         FindObjectOfType<Gaze>().setCrossHairMode();
-        isGunDrop = false;
+        _isGunDrop = false;
         gameObject.layer = 2;
-        rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         transform.parent = Camera.main.transform;
 
         var p = Camera.main.transform.position;
         var r = Camera.main.transform.rotation;
         Camera.main.transform.position = new Vector3(0, 0, 0);
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 0);
-        transform.rotation = gunrotation;
-        transform.position = gunposition;
+        transform.rotation = _gunRotation;
+        transform.position = _gunPosition;
 
         Camera.main.transform.position = p;
         Camera.main.transform.rotation = r;
-        gunCollider.enabled = false;
+        _gunCollider.enabled = false;
     }
 
     public void OpenTurretBuyMenu()
     {
-        TurretMenu.Play("Open");
+        _turretMenu.Play("Open");
     }
 
     public void CloseTurretBuyMenu()
     {
-        TurretMenu.Play("Close");
+        _turretMenu.Play("Close");
     }
 }

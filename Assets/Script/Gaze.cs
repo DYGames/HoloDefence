@@ -5,40 +5,35 @@ using System;
 
 public class Gaze : MonoBehaviour
 {
-    string mode;
+    string _mode;
 
-    MeshRenderer meshRenderer;
+    MeshRenderer _meshRenderer;
 
-    public GunMng Gun;
+    public GunMng _gun;
 
-    public GameObject CrossHair;
-    public GameObject Turret;
-    public GameObject TurretPrefab;
+    public GameObject _crossHair;
+    public GameObject _turret;
+    public GameObject _turretPrefab;
 
-    MeshRenderer Range;
+    MeshRenderer _range;
 
-    public GameObject FocusedObject { get; private set; }
-    GestureRecognizer recognizer;
+    public GameObject _focusedObject { get; private set; }
+    GestureRecognizer _recognizer;
 
 
     void Start()
     {
-        meshRenderer = CrossHair.GetComponent<MeshRenderer>();
-        recognizer = new GestureRecognizer();
-        recognizer.TappedEvent += (source, tapCount, ray) =>
-        {
-            OnSelect();
-            if (FocusedObject != null)
-                FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
-        };
-        recognizer.StartCapturingGestures();
-        mode = "CrossHair";
-        Range = transform.Find("Gaze").Find("Range").GetComponent<MeshRenderer>();
+        _meshRenderer = _crossHair.GetComponent<MeshRenderer>();
+        _recognizer = new GestureRecognizer();
+        _recognizer.TappedEvent += OnSelect;
+        _recognizer.StartCapturingGestures();
+        _mode = "CrossHair";
+        _range = transform.Find("Gaze").Find("Range").GetComponent<MeshRenderer>();
     }
 
     void Update()
     {
-        GameObject oldFocusObject = FocusedObject;
+        GameObject oldFocusObject = _focusedObject;
 
         Vector3 headposition = Camera.main.transform.position;
         Vector3 gazeDirection = Camera.main.transform.forward;
@@ -48,25 +43,25 @@ public class Gaze : MonoBehaviour
         {
             transform.position = hitinfo.point;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, hitinfo.normal);
-            meshRenderer.enabled = true;
-            if (mode == "Turret")
-                Range.enabled = true;
-            FocusedObject = hitinfo.collider.gameObject;
+            _meshRenderer.enabled = true;
+            if (_mode == "Turret")
+                _range.enabled = true;
+            _focusedObject = hitinfo.collider.gameObject;
 
             OnFocus(hitinfo, hitinfo.collider.gameObject.tag);
         }
         else
         {
-            meshRenderer.enabled = false;
-            Range.enabled = false;
-            FocusedObject = null;
+            _meshRenderer.enabled = false;
+            _range.enabled = false;
+            _focusedObject = null;
         }
 
-        if (FocusedObject != oldFocusObject)
+        if (_focusedObject != oldFocusObject)
         {
             OffFocus();
-            recognizer.CancelGestures();
-            recognizer.StartCapturingGestures();
+            _recognizer.CancelGestures();
+            _recognizer.StartCapturingGestures();
         }
     }
 
@@ -74,54 +69,55 @@ public class Gaze : MonoBehaviour
     {
         if (tag == "Monster")
         {
-            if (!Gun.isFocusOnMonster)
-                Gun.SetFocus(true, hitinfo.collider.gameObject.GetComponent<Monster>());
+            if (!_gun._isFocusOnUnit)
+                _gun.SetFocus(true, hitinfo.collider.gameObject.GetComponent<Unit>());
         }
         else if (tag == "Gun")
         {
-            Gun.PickGun();
+            _gun.PickGun();
         }
     }
 
     public void OffFocus()
     {
-        if (Gun.isFocusOnMonster)
+        if (_gun._isFocusOnUnit)
         {
-            Gun.SetFocus(false, null);
+            _gun.SetFocus(false, null);
         }
     }
 
     public void setTurretMode()
     {
-        meshRenderer.enabled = false;
-        meshRenderer = Turret.GetComponent<MeshRenderer>();
-        mode = "Turret";
-        Range.enabled = true;
-        Range.transform.localScale = new Vector3(20, 20, 20);
+        _meshRenderer.enabled = false;
+        _meshRenderer = _turret.GetComponent<MeshRenderer>();
+        _mode = "Turret";
+        _range.enabled = true;
+        _range.transform.localScale = new Vector3(20, 20, 20);
     }
 
     public void setCrossHairMode()
     {
-        meshRenderer.enabled = false;
-        meshRenderer = CrossHair.GetComponent<MeshRenderer>();
-        mode = "CrossHair";
+        _meshRenderer.enabled = false;
+        _meshRenderer = _crossHair.GetComponent<MeshRenderer>();
+        _mode = "CrossHair";
     }
 
-    void OnSelect()
+    public void OnSelect(InteractionSourceKind source, int tapCount, Ray headRay)
     {
-        if (FocusedObject == null)
+        if (_focusedObject == null)
             return;
 
-        if (mode == "Turret")
+        if (_mode == "Turret")
         {
-            GameObject o = Instantiate(TurretPrefab);
+            GameObject o = Instantiate(_turretPrefab);
             o.transform.position = transform.FindChild("Gaze").position;
             o.transform.rotation = transform.FindChild("Gaze").rotation;
-            //o.transform.parent = FocusedObject.transform;
             o.GetComponent<Turret>().InitTurret(10, 2, 1);
-            Gun.OpenTurretBuyMenu();
+            _gun.OpenTurretBuyMenu();
             setCrossHairMode();
-            Range.enabled = false;
+            _range.enabled = false;
         }
+
+        _focusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
     }
 }
